@@ -1,0 +1,4 @@
+# Netlify build: ráp nội dung (content/site.json) vào thiết kế (template.html) → dist/
+[build]
+  command = "node build.js"
+  publish = "dist"

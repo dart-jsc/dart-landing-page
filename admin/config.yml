@@ -1,0 +1,171 @@
+# Cấu hình Decap CMS cho trang quản trị godart.vn/admin
+#
+# ⚠️ KHỐI "backend" DƯỚI ĐÂY LÀ PLACEHOLDER.
+# Sau khi tạo site trên https://decapbridge.com (miễn phí) và nối repo GitHub,
+# DecapBridge sẽ sinh sẵn khối backend cho site của bạn — copy đè lên khối này.
+# (Xem HUONG_DAN_CMS.md, mục 3.)
+backend:
+  name: git-gateway
+  repo: THAY-BANG-TAI-KHOAN/godart-landing # ví dụ: dart-jsc/godart-landing
+  identity_url: THAY-BANG-IDENTITY-URL-TU-DECAPBRIDGE
+  gateway_url: https://gateway.decapbridge.com
+  branch: main
+
+site_url: https://godart.vn
+locale: vi
+
+# Không dùng ảnh upload ở giai đoạn này nhưng Decap yêu cầu khai báo
+media_folder: assets/uploads
+public_folder: /assets/uploads
+
+collections:
+  - name: trang-chu
+    label: "Trang chủ (godart.vn)"
+    files:
+      - name: noi-dung
+        label: "Toàn bộ nội dung trang"
+        file: content/site.json
+        fields:
+          - label: "SEO (Google & khi share link)"
+            name: seo
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Tiêu đề tab trình duyệt", name: title, widget: string }
+              - { label: "Mô tả trang (hiện trên Google)", name: description, widget: text }
+
+          - label: "Nút trên thanh menu"
+            name: header
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Chữ nút góc phải", name: cta, widget: string }
+
+          - label: "Màn hình đầu (Hero)"
+            name: hero
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Dòng trạng thái nhỏ (cạnh chấm cam)", name: badge, widget: string }
+              - { label: "Tiêu đề — dòng 1", name: line1, widget: string }
+              - { label: "Tiêu đề — chữ MÀU CAM ở dòng 2", name: line2_cam, widget: string }
+              - { label: "Tiêu đề — chữ MÀU XANH ở dòng 2", name: line2_xanh, widget: string }
+              - { label: "Đoạn mô tả dưới tiêu đề", name: sub, widget: text }
+              - { label: "Nút cam chính", name: cta_chinh, widget: string, hint: "Cũng là chữ trên nút nổi khi cuộn trang" }
+              - { label: "Link phụ (gạch chân cam)", name: cta_phu, widget: string }
+              - { label: "Dòng cam kết nhỏ dưới nút", name: note, widget: string }
+
+          - label: "Thẻ việc demo (deck quẹt)"
+            name: jobs
+            widget: list
+            collapsed: true
+            min: 3
+            max: 6
+            hint: "Cần ít nhất 3 thẻ. Thẻ 1 hiện trên cùng; thẻ 2–3 làm nền mờ phía sau."
+            fields:
+              - { label: "Tên công ty", name: company, widget: string }
+              - { label: "Khu vực", name: place, widget: string }
+              - { label: "Hình thức (Hybrid/Onsite/Remote)", name: mode, widget: string }
+              - { label: "Chức danh", name: title, widget: string }
+              - { label: "Mức lương (vd: 12 – 16 triệu ₫)", name: salary, widget: string }
+              - { label: "Độ hợp (vd: 86%)", name: match, widget: string }
+              - { label: "Vì sao hợp", name: reason, widget: string }
+
+          - label: "Mục: Biết đủ để quyết định"
+            name: proof
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Tiêu đề mục", name: h2, widget: string }
+              - { label: "Mô tả mục", name: sub, widget: text }
+              - label: "Điểm 1 (LƯƠNG)"
+                name: p1
+                widget: object
+                fields:
+                  - { label: "Nhãn", name: label, widget: string }
+                  - { label: "Tiêu đề", name: title, widget: string }
+                  - { label: "Mô tả", name: desc, widget: string }
+              - label: "Điểm 2 (PHÙ HỢP)"
+                name: p2
+                widget: object
+                fields:
+                  - { label: "Nhãn", name: label, widget: string }
+                  - { label: "Tiêu đề", name: title, widget: string }
+                  - { label: "Mô tả", name: desc, widget: string }
+              - label: "Điểm 3 (CẢNH BÁO)"
+                name: p3
+                widget: object
+                fields:
+                  - { label: "Nhãn", name: label, widget: string }
+                  - { label: "Tiêu đề", name: title, widget: string }
+                  - { label: "Mô tả", name: desc, widget: string }
+              - { label: "Thẻ minh hoạ — dòng 'Vì sao hợp'", name: card_reason, widget: string }
+              - { label: "Thẻ minh hoạ — dòng cảnh báo vàng", name: card_warn, widget: string }
+
+          - label: "Mục: Ba bước"
+            name: how
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Tiêu đề mục", name: h2, widget: string }
+              - { label: "Mô tả mục", name: sub, widget: string }
+              - label: "Các bước (đúng 3 bước)"
+                name: steps
+                widget: list
+                min: 3
+                max: 3
+                fields:
+                  - { label: "Tên bước", name: title, widget: string }
+                  - { label: "Mô tả bước", name: body, widget: string }
+
+          - label: "Mục: An toàn (nền xanh đậm)"
+            name: safety
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Tiêu đề — dòng 1", name: line1, widget: string }
+              - { label: "Tiêu đề — dòng 2", name: line2, widget: string }
+              - { label: "Tiêu đề — dòng 3 (MÀU CAM)", name: line3_cam, widget: string }
+              - { label: "Danh sách nguyên tắc an toàn", name: items, widget: list, field: { label: "Nội dung", name: item, widget: string }, min: 3, max: 6 }
+              - { label: "Thẻ minh hoạ — tên tin đáng ngờ", name: card_title, widget: string }
+              - { label: "Thẻ minh hoạ — trạng thái", name: card_status, widget: string }
+              - { label: "Thẻ minh hoạ — tiêu đề cảnh báo", name: card_warn_title, widget: string }
+              - { label: "Thẻ minh hoạ — nội dung cảnh báo", name: card_warn_body, widget: text }
+
+          - label: "Mục: Trích khảo sát"
+            name: quotes
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Tiêu đề mục", name: h2, widget: string }
+              - { label: "Nhãn nhỏ góc phải (xoá chữ PLACEHOLDER khi có trích dẫn thật)", name: badge, widget: string }
+              - { label: "Ghi chú dưới tiêu đề", name: note, widget: text }
+              - { label: "Các trích dẫn", name: items, widget: list, field: { label: "Câu trích", name: item, widget: text }, min: 1, max: 6 }
+
+          - label: "Mục: Waitlist"
+            name: waitlist
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Tiêu đề — dòng 1", name: h2_line1, widget: string }
+              - { label: "Tiêu đề — dòng 2", name: h2_line2, widget: string }
+              - { label: "Mô tả", name: sub, widget: text }
+
+          - label: "Câu hỏi thường gặp (FAQ)"
+            name: faq
+            widget: list
+            collapsed: true
+            min: 3
+            max: 8
+            fields:
+              - { label: "Câu hỏi", name: q, widget: string }
+              - { label: "Câu trả lời", name: a, widget: text }
+
+          - label: "Chân trang (Footer)"
+            name: footer
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Tagline", name: tagline, widget: string }
+              - { label: "Email liên hệ", name: email, widget: string }
+              - { label: "Dòng bản quyền", name: copyright, widget: string }

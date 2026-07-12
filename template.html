@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<!--
+  GoDart — Landing page waitlist.
+  Triển khai từ bản thiết kế "GoDart Landing Prototype v2.dc.html"
+  (dự án Claude Design "GoDart Brand Identity Guidelines").
+  FILE NÀY LÀ TEMPLATE (khung thiết kế) — đừng sửa chữ trực tiếp tại đây.
+  Nội dung chữ nằm ở content/site.json — sửa qua trang quản trị /admin (Decap CMS),
+  hoặc sửa JSON rồi chạy: node build.js  →  ra trang hoàn chỉnh ở dist/index.html.
+  Netlify tự build theo netlify.toml. Form waitlist ghi vào Google Sheet qua
+  hằng WAITLIST_ENDPOINT (gần cuối file). Hướng dẫn: HUONG_DAN_TRIEN_KHAI.md + HUONG_DAN_CMS.md.
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{seo.title}}</title>
+<meta name="description" content="{{seo.description}}">
+<meta property="og:title" content="{{seo.title}}">
+<meta property="og:description" content="{{seo.description}}">
+<meta name="theme-color" content="#FBFDFF">
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Ccircle cx='52' cy='48' r='28' fill='none' stroke='%236FC0EF' stroke-width='12'/%3E%3Cpolygon points='4,21 52,48 4,75' fill='%23F26B2C'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  /* ============ Nền tảng ============ */
+  :root {
+    --orange: #F26B2C;        /* Go — hành động, CTA chính */
+    --orange-soft: #FF8A4D;   /* cam trên nền tối */
+    --blue: #2E8FCC;          /* Dart — text-safe trên trắng */
+    --blue-pastel: #6FC0EF;   /* chỉ dùng cho symbol + nền tối */
+    --blue-link: #2372A8;
+    --ink: #21425E;
+    --ink-strong: #142C42;
+    --sub: #4A667E;
+    --muted: #7E97AB;
+    --faint: #A9BDCC;
+    --border: #D9E7F0;
+    --border-soft: #E4EDF3;
+    --bg: #FBFDFF;
+    --bg-alt: #F4F8FB;
+    --cream: #FFF7EC;
+    --success: #2FA36B;
+    --warn: #D98E0B;
+    --error: #C93B3B;
+  }
+  /* Khoá giao diện sáng: chặn trình duyệt "auto dark mode" tự đảo màu thương hiệu */
+  :root { color-scheme: only light; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; padding: 0; background: #EEF4F9; font-family: 'Be Vietnam Pro', -apple-system, 'Segoe UI', sans-serif; }
+  body { -webkit-font-smoothing: antialiased; }
+  a { color: var(--blue-link); text-decoration: none; }
+  a:hover { color: var(--orange); }
+  h1, h2, h3, p { margin: 0; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  svg { display: block; }
+  [hidden] { display: none !important; }
+  :focus-visible { outline: 3px solid rgba(46, 143, 204, 0.5); outline-offset: 2px; border-radius: 4px; }
+  .req { color: var(--error); }
+
+  @keyframes gd-tri  { from { transform: translateX(-46px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  @keyframes gd-ring { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  @keyframes gd-wave { 0% { transform: scale(0.92); opacity: 0.5; } 100% { transform: scale(2.2); opacity: 0; } }
+  @keyframes gd-spin { to { transform: rotate(360deg); } }
+  @keyframes gd-pop  { 0% { transform: scale(0.4); opacity: 0; } 60% { transform: scale(1.08); } 100% { transform: scale(1); opacity: 1; } }
+  @keyframes gd-dash { to { stroke-dashoffset: -28; } }
+
+  /* Trang full-bleed: dải màu các section tràn hết bề ngang, nội dung gói trong cột 1240px
+     (xem khối @media cuối). overflow-x: clip cắt thẻ bay ra ngoài mà KHÔNG phá sticky header. */
+  .page { background: var(--bg); color: var(--ink); overflow-x: clip; }
+
+  /* ============ Header ============ */
+  .site-header { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; padding: 14px clamp(20px, 4vw, 44px); background: var(--bg); border-bottom: 1px solid #E9F0F6; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand .ring { animation: gd-ring 0.5s ease-out both; }
+  .brand .tri  { animation: gd-tri 0.5s cubic-bezier(.2,.7,.3,1) 0.15s both; }
+  .wordmark { font-weight: 800; font-size: 22px; letter-spacing: -0.01em; }
+  .wm-go { color: var(--orange); }
+  .wm-dart { color: var(--blue); }
+  .nav { display: flex; align-items: center; gap: 26px; }
+  .nav-links { display: flex; align-items: center; gap: 26px; }
+  .nav-links a { font-size: 14px; font-weight: 600; color: var(--sub); }
+  .btn-nav { background: var(--ink-strong); color: #F5FAFD; font-size: 14px; font-weight: 700; padding: 10px 18px; border-radius: 999px; }
+  .btn-nav:hover { color: #F5FAFD; }
+
+  /* ============ Hero ============ */
+  .hero { display: flex; gap: clamp(24px, 4vw, 48px); padding: clamp(36px, 5vw, 60px) clamp(20px, 5vw, 64px) clamp(30px, 4vw, 42px); align-items: center; justify-content: center; flex-wrap: wrap; }
+  /* Cột chữ được ưu tiên nở rộng (container-type để h1 co theo cột — xem @supports dưới) */
+  .hero-copy { flex: 1.4 1 420px; min-width: 300px; container-type: inline-size; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; margin-bottom: 24px; }
+  .hero-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
+  .hero-badge span:last-child { font-size: 12.5px; font-weight: 600; color: var(--sub); }
+  .hero h1 { font-weight: 800; font-size: clamp(34px, 4.6vw, 66px); line-height: 1.08; letter-spacing: -0.03em; color: var(--ink-strong); }
+  /* Tiêu đề co theo bề rộng CỘT chứa nó (không phải màn hình) → luôn đúng 2 dòng.
+     Dòng dài nhất "Quẹt đúng hướng," = 8.53em → 11cqw là vừa khít có biên an toàn. */
+  @supports (width: 1cqw) {
+    .hero h1 { font-size: clamp(32px, 11cqw, 70px); }
+  }
+  .hero h1 .hl-orange { color: var(--orange); }
+  .hero h1 .hl-blue { color: var(--blue); }
+  .hero-sub { margin-top: 26px; font-size: clamp(16px, 1.7vw, 18px); line-height: 1.55; color: var(--sub); max-width: 430px; }
+  .hero-ctas { display: flex; align-items: center; gap: 16px; margin-top: 32px; flex-wrap: wrap; }
+  .btn-primary { background: var(--orange); color: var(--cream); font-size: 16px; font-weight: 700; padding: 15px 26px; border-radius: 999px; }
+  .btn-primary:hover { color: var(--cream); }
+  .link-underline { font-size: 15px; font-weight: 700; color: var(--ink-strong); border-bottom: 2px solid var(--orange); padding-bottom: 3px; }
+  .hero-note { margin-top: 18px; font-size: 13px; color: var(--muted); }
+
+  /* ============ Deck (thẻ quẹt) ============ */
+  .hero-deck { flex: 1 1 380px; max-width: 440px; min-width: 280px; display: flex; flex-direction: column; align-items: center; }
+  .deck-stage { position: relative; width: min(342px, 86vw); height: 470px; }
+  .job-card { position: absolute; inset: 0; background: #FFFFFF; border-radius: 20px; box-sizing: border-box; padding: 22px; overflow: hidden; }
+  .job-card--ghost2 { border: 1px solid var(--border-soft); transform: rotate(6deg) translate(10px, 10px); }
+  .job-card--ghost1 { border: 1px solid #DDE7EF; transform: rotate(-3deg); }
+  .job-card--top { border: 1px solid var(--border); box-shadow: 0 18px 40px rgba(30, 58, 84, 0.13); cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; transform: translateX(10px) rotate(3deg); }
+  .ghost-head { display: flex; align-items: center; gap: 10px; }
+  .job-head { display: flex; justify-content: space-between; align-items: flex-start; }
+  .job-firm { display: flex; align-items: center; gap: 11px; }
+  .job-logo { width: 50px; height: 50px; border-radius: 14px; background: var(--ink-strong); color: #F5FAFD; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; }
+  .job-firmline { display: flex; align-items: center; gap: 5px; }
+  .job-company { font-size: 13px; font-weight: 600; color: var(--sub); }
+  .job-place { margin-top: 2px; font-size: 11px; color: var(--muted); }
+  .match-pill { background: #EAF6FE; color: var(--blue-link); font-weight: 800; font-size: 12.5px; border-radius: 999px; padding: 6px 11px; }
+  .job-title { margin-top: 22px; font-weight: 800; font-size: 26px; line-height: 1.12; letter-spacing: -0.01em; }
+  .job-chips { margin-top: 15px; display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+  .chip-salary { background: #E3F3EA; color: #1F7A4D; font-weight: 800; font-size: 17px; border-radius: 999px; padding: 8px 15px; }
+  .reason-box { margin-top: 15px; background: var(--bg); border: 1px solid #EEF4F9; border-radius: 12px; padding: 12px 13px; }
+  .reason-box p { font-size: 12px; line-height: 1.5; color: var(--sub); }
+  .reason-box strong { color: var(--blue-link); }
+  .drag-hint { margin-top: 12px; display: flex; align-items: center; gap: 8px; color: var(--muted); }
+  .drag-hint p { font-size: 11.5px; font-weight: 600; }
+  .stamp { position: absolute; top: 24px; font-weight: 800; font-size: 15px; letter-spacing: 0.06em; padding: 5px 11px; border-radius: 10px; opacity: 0; }
+  .stamp--like { left: 20px; border: 3px solid var(--success); color: var(--success); transform: rotate(-14deg); }
+  .stamp--nope { right: 20px; border: 3px solid var(--muted); color: var(--muted); transform: rotate(14deg); }
+  .deck-done { position: absolute; inset: 0; background: var(--bg); border: 1.5px dashed #C9D8E4; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; padding: 30px; box-sizing: border-box; text-align: center; }
+  .deck-done h3 { font-weight: 800; font-size: 19px; }
+  .deck-done p { font-size: 13px; line-height: 1.5; color: var(--sub); }
+  .btn-dark { background: var(--ink-strong); color: #F5FAFD; font-weight: 700; font-size: 14px; border-radius: 999px; padding: 12px 22px; }
+  .deck-controls { display: flex; align-items: center; gap: 16px; margin-top: 24px; }
+  .ctrl { border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+  .ctrl--skip { width: 52px; height: 52px; background: #FFFFFF; border: 1.5px solid var(--border); }
+  .ctrl--save { width: 44px; height: 44px; background: #FFFFFF; border: 1.5px solid #B9DFF8; }
+  .ctrl--go { width: 60px; height: 60px; background: var(--orange); box-shadow: 0 10px 22px rgba(242, 107, 44, 0.32); }
+
+  /* ============ Product proof ============ */
+  .proof { padding: clamp(44px, 5.5vw, 66px) clamp(20px, 5vw, 64px); background: #FFFFFF; border-top: 1px solid #EEF4F9; }
+  .proof h2 { margin-bottom: 8px; font-weight: 800; font-size: clamp(28px, 3.9vw, 44px); line-height: 1.14; letter-spacing: -0.02em; max-width: 640px; }
+  .proof-sub { margin-bottom: clamp(28px, 3vw, 40px); font-size: clamp(15px, 1.6vw, 17px); line-height: 1.55; color: var(--sub); max-width: 470px; }
+  .proof-flex { display: flex; gap: clamp(30px, 4.5vw, 64px); align-items: center; flex-wrap: wrap; max-width: 1000px; margin: 0 auto; }
+  .proof-points { flex: 1 1 300px; min-width: 280px; display: flex; flex-direction: column; gap: clamp(22px, 2.6vw, 32px); }
+  .point { display: flex; gap: 14px; align-items: flex-start; }
+  .point svg { flex-shrink: 0; margin-top: 5px; }
+  .point-label { font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: var(--orange); }
+  .point-label--warn { color: #B87A08; }
+  .point h3 { margin-top: 6px; font-size: clamp(17px, 1.8vw, 21px); font-weight: 800; line-height: 1.28; color: var(--ink-strong); }
+  .point p { margin-top: 6px; font-size: 14px; line-height: 1.5; color: var(--sub); }
+  .proof-cardwrap { flex: 1 1 330px; min-width: 300px; display: flex; justify-content: center; }
+  .demo-card { width: 100%; max-width: 384px; background: #FFFFFF; border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 18px 42px rgba(30, 58, 84, 0.10); box-sizing: border-box; padding: 22px; }
+  .demo-card .job-title { margin-top: 18px; font-size: 24px; line-height: normal; }
+  .demo-card .job-chips { margin-top: 14px; }
+  .demo-card .chip-salary { font-size: 16px; padding: 7px 14px; }
+  .chip-tag { border: 1px solid var(--border); color: var(--sub); font-size: 12px; font-weight: 600; border-radius: 999px; padding: 6px 11px; }
+  .demo-card .reason-box { margin-top: 14px; }
+  .warn-box { margin-top: 11px; background: #FFF9EE; border: 1px solid #F0DCB0; border-radius: 12px; padding: 11px 13px; display: flex; gap: 9px; align-items: center; }
+  .warn-box svg { flex-shrink: 0; }
+  .warn-box p { font-size: 11.5px; line-height: 1.45; color: #8A5E06; }
+
+  /* ============ Cách hoạt động ============ */
+  .how { scroll-margin-top: 80px; padding: clamp(44px, 5.5vw, 66px) clamp(20px, 5vw, 64px); background: var(--bg-alt); border-top: 1px solid var(--border-soft); }
+  .how h2 { margin-bottom: 6px; font-weight: 800; font-size: clamp(26px, 3.6vw, 40px); letter-spacing: -0.02em; line-height: 1.14; max-width: 560px; }
+  .how-sub { font-size: clamp(15px, 1.6vw, 17px); color: var(--sub); }
+  .how-journey { display: flex; align-items: center; gap: 8px; margin: 36px 0 26px; }
+  .how-journey svg { flex: 0 0 auto; }
+  .how-journey .how-line { flex: 1 1 0; min-width: 0; }
+  .how-journey line { animation: gd-dash 1.1s linear infinite; }
+  .how-steps { display: flex; gap: clamp(18px, 3vw, 40px); flex-wrap: wrap; }
+  .step { flex: 1 1 240px; min-width: 220px; }
+  .step-head { display: flex; align-items: baseline; gap: 10px; }
+  .step-num { font-size: 13px; font-weight: 800; color: var(--orange); }
+  .step-head p { font-size: clamp(18px, 1.9vw, 21px); font-weight: 800; }
+  .step-body { margin-top: 9px; font-size: 14.5px; line-height: 1.55; color: var(--sub); }
+  .how-chip { margin-top: 32px; display: inline-flex; align-items: center; gap: 11px; background: #FFFFFF; border: 1px solid var(--border); border-radius: 14px; padding: 13px 18px; }
+  .how-chip .tick { width: 26px; height: 26px; border-radius: 50%; background: #E3F3EA; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .how-chip p { font-size: 15px; font-weight: 700; }
+  .how-chip .hl-orange { color: var(--orange); }
+
+  /* ============ An toàn (navy) ============ */
+  .safety { scroll-margin-top: 80px; padding: clamp(52px, 6.5vw, 78px) clamp(20px, 5vw, 64px); background: var(--ink-strong); display: flex; gap: clamp(32px, 5vw, 64px); align-items: center; flex-wrap: wrap; }
+  .safety-copy { flex: 1.1 1 340px; min-width: 300px; }
+  .safety h2 { font-weight: 800; font-size: clamp(30px, 4.2vw, 46px); line-height: 1.14; letter-spacing: -0.02em; color: #F7F5FA; }
+  .safety h2 .hl { color: var(--orange-soft); }
+  .safety-list { display: flex; flex-direction: column; margin-top: 28px; max-width: 500px; }
+  .safety-row { display: flex; align-items: center; gap: 15px; padding: 15px 0; border-bottom: 1px solid #2C4D6B; }
+  .safety-row:last-child { border-bottom: 0; }
+  .safety-row svg { flex-shrink: 0; }
+  .safety-row p { font-size: clamp(15px, 1.7vw, 16.5px); font-weight: 600; color: #F5FAFD; }
+  .safety-cardwrap { flex: 0.8 1 280px; min-width: 280px; display: flex; justify-content: center; }
+  .scam-card { width: min(320px, 90vw); background: #F5FAFD; border-radius: 20px; padding: 18px; box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28); box-sizing: border-box; }
+  .scam-head { display: flex; align-items: center; gap: 10px; padding-bottom: 14px; border-bottom: 1px solid #EEF4F9; }
+  .scam-logo { width: 40px; height: 40px; border-radius: 12px; background: var(--border); color: var(--muted); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 17px; }
+  .scam-head .t { font-size: 14px; font-weight: 800; }
+  .scam-head .s { margin-top: 2px; font-size: 11px; color: var(--muted); }
+  .scam-warn { margin-top: 14px; background: #FFF9EE; border: 1.5px solid #F0DCB0; border-radius: 16px; padding: 15px; }
+  .scam-warn-head { display: flex; align-items: center; gap: 8px; }
+  .scam-warn-head p { font-size: 12.5px; font-weight: 800; color: #8A5E06; }
+  .scam-warn-body { margin-top: 9px; font-size: 12px; line-height: 1.55; color: #5C4008; }
+  .scam-actions { display: flex; gap: 8px; margin-top: 13px; }
+  .scam-actions span { flex: 1; font-weight: 700; font-size: 12px; border-radius: 999px; padding: 10px 0; text-align: center; }
+  .scam-actions .ghost { border: 1.5px solid #8A5E06; color: #8A5E06; }
+  .scam-actions .solid { background: #B44513; color: var(--cream); }
+
+  /* ============ Trích khảo sát ============ */
+  .quotes { padding: clamp(44px, 5.5vw, 66px) clamp(20px, 5vw, 64px); background: var(--bg); }
+  .quotes-head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 6px; }
+  .quotes h2 { font-weight: 800; font-size: clamp(26px, 3.6vw, 40px); letter-spacing: -0.02em; line-height: 1.16; max-width: 620px; }
+  .quotes-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--faint); border: 1px dashed #C9D8E4; border-radius: 999px; padding: 6px 12px; white-space: nowrap; }
+  .quotes-note { margin-bottom: 30px; font-size: 13.5px; color: var(--muted); max-width: 560px; }
+  .quotes-list { display: flex; flex-direction: column; gap: clamp(20px, 2.4vw, 28px); }
+  .quote { max-width: 640px; }
+  .quote-inner { display: flex; gap: 14px; }
+  .quote-mark { font-size: 44px; font-weight: 800; line-height: 0.8; }
+  .quote p { font-size: clamp(19px, 2.3vw, 26px); font-weight: 600; line-height: 1.32; color: var(--ink-strong); }
+  .quote--2 { max-width: 660px; margin-left: clamp(0px, 7vw, 104px); }
+  .quote--3 { margin-left: clamp(0px, 4vw, 52px); }
+
+  /* ============ Waitlist ============ */
+  .waitlist { scroll-margin-top: 80px; padding: clamp(52px, 6.5vw, 78px) clamp(20px, 5vw, 64px); background: var(--bg-alt); border-top: 1px solid var(--border-soft); }
+  .waitlist-head { max-width: 560px; margin: 0 auto; text-align: center; }
+  .waitlist h2 { font-weight: 800; font-size: clamp(30px, 4.2vw, 46px); letter-spacing: -0.02em; line-height: 1.14; }
+  .waitlist-sub { margin: 18px auto 0; font-size: clamp(15px, 1.7vw, 18px); line-height: 1.55; color: var(--sub); max-width: 440px; }
+  .waitlist-formwrap { max-width: 460px; margin: 30px auto 0; }
+  .form-card { background: #FFFFFF; border: 1px solid var(--border); border-radius: 20px; padding: clamp(22px, 3vw, 30px); box-shadow: 0 14px 34px rgba(30, 58, 84, 0.07); }
+  .type-toggle { display: flex; gap: 10px; margin-bottom: 16px; }
+  .type-btn { flex: 1; border: 1.5px solid var(--border); background: #FFFFFF; border-radius: 12px; padding: 13px; text-align: center; font-size: 14px; font-weight: 700; color: var(--sub); }
+  .type-btn--cand.selected { border-color: var(--orange); background: #FFF3EC; color: #B44513; }
+  .type-btn--rec.selected { border-color: var(--blue); background: #EAF6FE; color: var(--blue-link); }
+  .form-label { display: block; margin-bottom: 7px; font-size: 13px; font-weight: 600; }
+  .form-input { width: 100%; box-sizing: border-box; border: 2px solid var(--blue); background: #FFFFFF; border-radius: 13px; height: 50px; padding: 0 16px; font-size: 15px; font-family: inherit; color: var(--ink); outline: none; }
+  .form-input:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(46, 143, 204, 0.22); }
+  .form-input.is-error { border: 1.5px solid var(--error); }
+  .form-error { display: flex; gap: 6px; align-items: flex-start; margin-top: 8px; }
+  .form-error svg { flex-shrink: 0; margin-top: 1px; }
+  .form-error p { font-size: 12px; line-height: 1.45; color: var(--error); }
+  .check-row { display: flex; gap: 11px; align-items: flex-start; margin-top: 16px; cursor: pointer; }
+  .check-row--mkt { margin-top: 11px; }
+  .check-input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+  .check-box { width: 21px; height: 21px; border-radius: 6px; background: #FFFFFF; border: 1.5px solid #C9D8E4; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; box-sizing: border-box; }
+  .check-box svg { opacity: 0; }
+  .check-input:checked + .check-box { background: var(--ink-strong); border-color: var(--ink-strong); }
+  .check-input:checked + .check-box svg { opacity: 1; }
+  .check-input:focus-visible + .check-box { outline: 3px solid rgba(46, 143, 204, 0.5); outline-offset: 2px; }
+  .check-text { font-size: 12.5px; line-height: 1.5; color: var(--sub); }
+  .check-row--mkt .check-text { color: var(--muted); }
+  .btn-submit { width: 100%; background: var(--orange); color: var(--cream); font-weight: 700; font-size: 16px; border-radius: 999px; padding: 15px 0; margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 9px; }
+  .btn-submit.loading { background: #F5A576; cursor: default; }
+  .btn-submit .spin { animation: gd-spin 0.7s linear infinite; }
+  .form-note { margin-top: 12px; font-size: 11.5px; line-height: 1.5; color: var(--muted); text-align: center; }
+  .success-card { background: #FFFFFF; border: 1px solid var(--border); border-radius: 20px; padding: 40px 30px; text-align: center; }
+  .success-logo { position: relative; width: 100px; height: 100px; margin: 0 auto; }
+  .success-logo svg { position: relative; animation: gd-pop 0.5s cubic-bezier(.2,.7,.3,1) both; }
+  .wave-origin { position: absolute; width: 0; height: 0; }
+  .success-logo .wave-origin { left: 58px; top: 50px; }
+  .wave { position: absolute; border-radius: 50%; border: 3px solid var(--blue-pastel); box-sizing: border-box; animation: gd-wave 1.6s ease-out infinite; }
+  .success-logo .wave { left: -32px; top: -32px; width: 64px; height: 64px; }
+  .wave--2 { border-width: 2px; animation-delay: 0.7s; }
+  .success-card h3 { margin-top: 22px; font-weight: 800; font-size: 25px; letter-spacing: -0.01em; outline: none; }
+  .success-card .msg { margin-top: 12px; font-size: 14.5px; line-height: 1.55; color: var(--sub); }
+  .success-card .tagline { margin-top: 18px; font-size: 15px; font-weight: 700; }
+  .btn-outline { display: inline-block; margin-top: 20px; border: 1.5px solid var(--ink); color: var(--ink); font-weight: 600; font-size: 14px; border-radius: 999px; padding: 11px 22px; }
+
+  /* ============ FAQ ============ */
+  .faq { padding: clamp(44px, 5.5vw, 66px) clamp(20px, 5vw, 64px); background: #FFFFFF; border-top: 1px solid #EEF4F9; display: flex; gap: clamp(28px, 5vw, 56px); flex-wrap: wrap; }
+  .faq-title { flex: 0.7 1 240px; min-width: 220px; }
+  .faq-title h2 { font-weight: 800; font-size: clamp(28px, 3.6vw, 42px); letter-spacing: -0.02em; line-height: 1.12; }
+  .faq-list { flex: 1.3 1 320px; min-width: 300px; border-top: 1px solid var(--border-soft); }
+  .faq-item { border-bottom: 1px solid var(--border-soft); }
+  .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; text-align: left; }
+  .faq-q .q { font-size: clamp(15px, 1.7vw, 17px); font-weight: 700; }
+  .faq-sign { font-size: 22px; font-weight: 700; color: var(--orange); flex-shrink: 0; line-height: 1; }
+  .faq-a { margin-top: -8px; padding-bottom: 20px; }
+  .faq-a p { font-size: 14.5px; line-height: 1.6; color: var(--sub); max-width: 620px; }
+
+  /* ============ Footer ============ */
+  .site-footer { padding: clamp(38px, 5vw, 48px) clamp(20px, 5vw, 64px); background: var(--ink-strong); }
+  .footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; flex-wrap: wrap; }
+  .footer-brand { max-width: 340px; }
+  .footer-brand .wordmark { font-size: 20px; }
+  .footer-brand .wm-go { color: var(--orange-soft); }
+  .footer-brand .wm-dart { color: var(--blue-pastel); }
+  .footer-tagline { margin-top: 14px; font-size: 16px; font-weight: 700; color: #F5FAFD; }
+  .footer-mail { margin-top: 10px; font-size: 12.5px; color: var(--muted); }
+  .footer-cols { display: flex; gap: 50px; flex-wrap: wrap; align-items: flex-start; }
+  .footer-col { display: flex; flex-direction: column; gap: 11px; }
+  .footer-col--social { gap: 13px; }
+  .footer-col-title { margin-bottom: 2px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: #5E7A90; }
+  .footer-col a { font-size: 13.5px; color: #B9CFE0; }
+  .social-row { display: flex; gap: 10px; }
+  .social-row a { width: 42px; height: 42px; border-radius: 12px; background: #1E3A54; display: inline-flex; align-items: center; justify-content: center; color: #CBDDEC; }
+  .footer-bottom { margin-top: 30px; padding-top: 20px; border-top: 1px solid #2C4D6B; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .footer-bottom p { font-size: 12px; color: var(--muted); }
+  .footer-bottom .made { color: #5E7A90; }
+
+  /* ============ Sticky CTA ============ */
+  .sticky-cta { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; justify-content: center; pointer-events: none; transform: translateY(120px); visibility: hidden; transition: transform 0.3s cubic-bezier(.2,.7,.3,1), visibility 0s linear 0.3s; }
+  .sticky-cta.show { transform: translateY(0); visibility: visible; transition: transform 0.3s cubic-bezier(.2,.7,.3,1), visibility 0s; }
+  .sticky-cta a { pointer-events: auto; margin-bottom: 20px; background: var(--orange); color: var(--cream); font-size: 15px; font-weight: 700; padding: 14px 26px; border-radius: 999px; box-shadow: 0 12px 30px rgba(242, 107, 44, 0.4); display: inline-flex; align-items: center; gap: 10px; }
+  .sticky-cta a:hover { color: var(--cream); }
+
+  /* ============ Match overlay ============ */
+  .match-overlay { position: fixed; inset: 0; z-index: 60; background: rgba(20, 44, 66, 0.55); display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .match-card { background: #FFFFFF; border-radius: 24px; padding: 44px 36px; max-width: 360px; text-align: center; animation: gd-pop 0.4s cubic-bezier(.2,.7,.3,1) both; }
+  .match-logo { position: relative; width: 120px; height: 120px; margin: 0 auto; }
+  .match-logo svg { position: relative; }
+  .match-logo .wave-origin { left: 70px; top: 60px; }
+  .match-logo .wave { left: -38px; top: -38px; width: 76px; height: 76px; }
+  .match-card h3 { margin-top: 22px; font-weight: 800; font-size: 29px; letter-spacing: -0.01em; }
+  .match-card .msg { margin-top: 12px; font-size: 14.5px; line-height: 1.55; color: var(--sub); }
+  .match-card .msg strong { color: var(--ink); }
+  .match-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+  .btn-match { background: var(--orange); color: var(--cream); font-weight: 700; font-size: 15px; border-radius: 999px; padding: 14px 0; }
+
+  /* ============ Fade-in khi cuộn + header ẩn/hiện ============ */
+  /* Nội dung mờ + trượt nhẹ lên khi lọt vào khung nhìn */
+  .gd-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.2,.7,.3,1); will-change: opacity, transform; }
+  .gd-reveal.is-visible { opacity: 1; transform: none; }
+  /* Header mờ + trượt lên khi đang cuộn xuống, hiện lại khi dừng/cuộn lên */
+  .site-header { transition: opacity 0.35s ease, transform 0.35s ease; }
+  .site-header.gd-hide { opacity: 0; transform: translateY(-10px); pointer-events: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .gd-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .site-header.gd-hide { opacity: 1; transform: none; pointer-events: auto; }
+  }
+
+  /* ============ Responsive ============ */
+  /* Cân bằng độ dài các dòng của heading dài khi bị xuống dòng ở màn giữa */
+  .proof h2, .how h2, .quotes h2 { text-wrap: balance; }
+
+  /* Màn hình rộng: nền tràn hết bề ngang, nội dung canh giữa trong cột 1240px.
+     1112 = 1240 − 2×64 (padding ngang tối đa của section); 1152 = 1240 − 2×44 (của header). */
+  @media (min-width: 1240px) {
+    .site-header { padding-inline: calc((100% - 1152px) / 2); }
+    .hero, .proof, .how, .safety, .quotes, .waitlist, .faq, .site-footer { padding-inline: calc((100% - 1112px) / 2); }
+  }
+
+  @media (max-width: 919px) {
+    .proof-flex { flex-direction: column-reverse; }
+  }
+  @media (max-width: 639px) {
+    .nav-links { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.001s !important; animation-iteration-count: 1 !important; transition-duration: 0.001s !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ Header ============ -->
+  <header class="site-header">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 96 96" aria-hidden="true"><circle class="ring" cx="52" cy="48" r="28" fill="none" stroke="#6FC0EF" stroke-width="12"></circle><polygon class="tri" points="4,21 52,48 4,75" fill="#F26B2C"></polygon></svg>
+      <span class="wordmark"><span class="wm-go">Go</span><span class="wm-dart">Dart</span></span>
+    </div>
+    <nav class="nav" aria-label="Điều hướng chính">
+      <div class="nav-links">
+        <a href="#how">Cách hoạt động</a>
+        <a href="#safety">An toàn</a>
+      </div>
+      <a class="btn-nav" href="#waitlist">{{header.cta}}</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============ Hero ============ -->
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="hero-badge"><span class="dot"></span><span>{{hero.badge}}</span></div>
+        <h1>{{hero.line1}}<br><span class="hl-orange">{{hero.line2_cam}}</span> <span class="hl-blue">{{hero.line2_xanh}}</span></h1>
+        <p class="hero-sub">{{hero.sub}}</p>
+        <div class="hero-ctas">
+          <a class="btn-primary" href="#waitlist">{{hero.cta_chinh}}</a>
+          <a class="link-underline" href="#how">{{hero.cta_phu}}</a>
+        </div>
+        <p class="hero-note">{{hero.note}}</p>
+      </div>
+
+      <!-- Deck thẻ quẹt tương tác -->
+      <div class="hero-deck">
+        <div class="deck-stage">
+          <!-- 2 thẻ nền (trang trí) -->
+          <div class="job-card job-card--ghost2" aria-hidden="true">
+            <div class="ghost-head" style="opacity: 0.55;">
+              <span class="job-logo" style="width: 46px; height: 46px; border-radius: 13px; background: #E4EDF3; color: #7E97AB; font-size: 18px;">{{job3.initial}}</span>
+              <div><p style="font-size: 12px; font-weight: 600; color: #7E97AB;">{{job3.company}}</p><p style="margin-top: 2px; font-size: 10.5px; color: #A9BDCC;">{{job3.place}} · {{job3.mode}}</p></div>
+            </div>
+            <p style="margin-top: 18px; font-weight: 800; font-size: 21px; color: #C4D2DD;">{{job3.title}}</p>
+            <span style="display: inline-block; margin-top: 14px; background: #EDF3F7; color: #A9BDCC; font-weight: 800; font-size: 14px; border-radius: 999px; padding: 6px 13px;">{{job3.salary}}</span>
+          </div>
+          <div class="job-card job-card--ghost1" aria-hidden="true">
+            <div class="ghost-head" style="opacity: 0.7;">
+              <span class="job-logo" style="width: 48px; height: 48px; font-size: 19px;">{{job2.initial}}</span>
+              <div><p style="font-size: 12.5px; font-weight: 600; color: #4A667E;">{{job2.company}}</p><p style="margin-top: 2px; font-size: 11px; color: #7E97AB;">{{job2.place}} · {{job2.mode}}</p></div>
+            </div>
+            <p style="margin-top: 18px; font-weight: 800; font-size: 23px; color: #7E97AB;">{{job2.title}}</p>
+            <span style="display: inline-block; margin-top: 14px; background: #EEF5F1; color: #7FA890; font-weight: 800; font-size: 15px; border-radius: 999px; padding: 7px 14px;">{{job2.salary}}</span>
+          </div>
+
+          <!-- Thẻ trên cùng (kéo được, nội dung do JS cập nhật) -->
+          <div class="job-card job-card--top" id="top-card">
+            <div class="stamp stamp--like" id="badge-like" aria-hidden="true">ỨNG TUYỂN</div>
+            <div class="stamp stamp--nope" id="badge-nope" aria-hidden="true">BỎ QUA</div>
+            <div class="job-head">
+              <div class="job-firm">
+                <span class="job-logo" id="job-initial">{{job1.initial}}</span>
+                <div>
+                  <div class="job-firmline">
+                    <p class="job-company" id="job-company">{{job1.company}}</p>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2E8FCC" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 L19.5 5.8 V11.5 C19.5 16.5 16 19.6 12 21 C8 19.6 4.5 16.5 4.5 11.5 V5.8 Z"></path><polyline points="8.5,12 11,14.5 15.5,9.5"></polyline></svg>
+                  </div>
+                  <p class="job-place" id="job-place">{{job1.place}} · {{job1.mode}}</p>
+                </div>
+              </div>
+              <span class="match-pill" id="job-match">{{job1.match}} hợp</span>
+            </div>
+            <h3 class="job-title" id="job-title">{{job1.title}}</h3>
+            <div class="job-chips"><span class="chip-salary" id="job-salary">{{job1.salary}}</span></div>
+            <div class="reason-box"><p><strong>Vì sao hợp:</strong> <span id="job-reason">{{job1.reason}}</span></p></div>
+            <div class="drag-hint"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7E97AB" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12 H15 M11 8 L15 12 L11 16"></path></svg><p>Kéo sang phải nếu quan tâm</p></div>
+          </div>
+
+          <!-- Hết thẻ demo -->
+          <div class="deck-done" id="deck-done" hidden>
+            <svg width="66" height="66" viewBox="0 0 96 96" aria-hidden="true"><circle cx="52" cy="48" r="28" fill="none" stroke="#B7C9D6" stroke-width="12" stroke-dasharray="6 8" stroke-linecap="round"></circle><polygon points="4,21 52,48 4,75" fill="#D9E7F0"></polygon></svg>
+            <h3>Hết thẻ demo rồi!</h3>
+            <p>Trong app thật, deck sẽ liên tục học gu và gợi ý việc mới cho bạn.</p>
+            <button class="btn-dark" type="button" id="btn-deck-reset">Quẹt lại từ đầu</button>
+          </div>
+        </div>
+
+        <!-- Nút điều khiển -->
+        <div class="deck-controls">
+          <button class="ctrl ctrl--skip" type="button" id="btn-skip" title="Bỏ qua" aria-label="Bỏ qua"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7E97AB" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg></button>
+          <button class="ctrl ctrl--save" type="button" id="btn-save" title="Lưu" aria-label="Lưu"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2E8FCC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4 H17 V20.5 L12 16.5 L7 20.5 Z"></path></svg></button>
+          <button class="ctrl ctrl--go" type="button" id="btn-interested" title="Quan tâm" aria-label="Quan tâm"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><polygon points="6,4 20,12 6,20" fill="#FFF7EC"></polygon></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Product proof ============ -->
+    <section class="proof">
+      <h2>{{proof.h2}}</h2>
+      <p class="proof-sub">{{proof.sub}}</p>
+      <div class="proof-flex">
+        <div class="proof-points">
+          <div class="point">
+            <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><polygon points="4,4 20,12 4,20" fill="#F26B2C"></polygon></svg>
+            <div><span class="point-label">{{proof.p1.label}}</span><h3>{{proof.p1.title}}</h3><p>{{proof.p1.desc}}</p></div>
+          </div>
+          <div class="point">
+            <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><polygon points="4,4 20,12 4,20" fill="#F26B2C"></polygon></svg>
+            <div><span class="point-label">{{proof.p2.label}}</span><h3>{{proof.p2.title}}</h3><p>{{proof.p2.desc}}</p></div>
+          </div>
+          <div class="point">
+            <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><polygon points="4,4 20,12 4,20" fill="#D98E0B"></polygon></svg>
+            <div><span class="point-label point-label--warn">{{proof.p3.label}}</span><h3>{{proof.p3.title}}</h3><p>{{proof.p3.desc}}</p></div>
+          </div>
+        </div>
+        <div class="proof-cardwrap">
+          <div class="demo-card">
+            <div class="job-head">
+              <div class="job-firm">
+                <span class="job-logo">{{job1.initial}}</span>
+                <div>
+                  <div class="job-firmline">
+                    <p class="job-company">{{job1.company}}</p>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2E8FCC" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 L19.5 5.8 V11.5 C19.5 16.5 16 19.6 12 21 C8 19.6 4.5 16.5 4.5 11.5 V5.8 Z"></path><polyline points="8.5,12 11,14.5 15.5,9.5"></polyline></svg>
+                  </div>
+                  <p class="job-place">Đã xác minh · 2 giờ trước</p>
+                </div>
+              </div>
+              <span class="match-pill">{{job1.match}} hợp</span>
+            </div>
+            <h3 class="job-title">{{job1.title}}</h3>
+            <div class="job-chips"><span class="chip-salary">{{job1.salary}}</span><span class="chip-tag">{{job1.place}}</span><span class="chip-tag">{{job1.mode}}</span></div>
+            <div class="reason-box"><p><strong>Vì sao hợp:</strong> {{proof.card_reason}}</p></div>
+            <div class="warn-box"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#D98E0B" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="7.5" x2="12" y2="13"></line><circle cx="12" cy="16.4" r="0.6" fill="#D98E0B"></circle></svg><p>{{proof.card_warn}}</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Cách hoạt động ============ -->
+    <section class="how" id="how">
+      <h2>{{how.h2}}</h2>
+      <p class="how-sub">{{how.sub}}</p>
+      <!-- Mũi tên & vòng tròn giữ tỷ lệ cố định, chỉ đường gạch giữa co giãn -->
+      <div class="how-journey" aria-hidden="true">
+        <svg width="34" height="34" viewBox="0 0 34 34"><polygon points="0,10 34,17 0,24" fill="#F26B2C"></polygon></svg>
+        <svg class="how-line" height="34"><line x1="0" y1="17" x2="100%" y2="17" stroke="#B9DFF8" stroke-width="2.5" stroke-dasharray="7 9" stroke-linecap="round"></line></svg>
+        <svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="#2E8FCC" stroke-width="5"></circle><circle cx="18" cy="18" r="4" fill="#F26B2C"></circle></svg>
+      </div>
+      <div class="how-steps">
+{{STEPS}}
+      </div>
+      <div class="how-chip"><span class="tick"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5,12.5 10,17.5 19,7"></polyline></svg></span><p>Quẹt phải <span class="hl-orange">không</span> tự động gửi CV — bạn luôn kiểm soát việc chia sẻ hồ sơ.</p></div>
+    </section>
+
+    <!-- ============ An toàn ============ -->
+    <section class="safety" id="safety">
+      <div class="safety-copy">
+        <h2>{{safety.line1}}<br>{{safety.line2}}<br><span class="hl">{{safety.line3_cam}}</span></h2>
+        <div class="safety-list">
+{{SAFETY_ITEMS}}
+        </div>
+      </div>
+      <div class="safety-cardwrap">
+        <div class="scam-card">
+          <div class="scam-head">
+            <span class="scam-logo">?</span>
+            <div><p class="t">{{safety.card_title}}</p><p class="s">{{safety.card_status}}</p></div>
+          </div>
+          <div class="scam-warn">
+            <div class="scam-warn-head"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#D98E0B" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="7.5" x2="12" y2="13"></line><circle cx="12" cy="16.4" r="0.6" fill="#D98E0B"></circle></svg><p>{{safety.card_warn_title}}</p></div>
+            <p class="scam-warn-body">{{safety.card_warn_body}}</p>
+          </div>
+          <div class="scam-actions"><span class="ghost">Xem 4 dấu hiệu</span><span class="solid">Báo cáo tin</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Trích khảo sát ============ -->
+    <section class="quotes">
+      <div class="quotes-head">
+        <h2>{{quotes.h2}}</h2>
+        <span class="quotes-badge">{{quotes.badge}}</span>
+      </div>
+      <p class="quotes-note">{{quotes.note}}</p>
+      <div class="quotes-list">
+{{QUOTE_ITEMS}}
+      </div>
+    </section>
+
+    <!-- ============ Waitlist ============ -->
+    <section class="waitlist" id="waitlist">
+      <div class="waitlist-head">
+        <h2>{{waitlist.h2_line1}}<br>{{waitlist.h2_line2}}</h2>
+        <p class="waitlist-sub">{{waitlist.sub}}</p>
+      </div>
+      <div class="waitlist-formwrap">
+        <form class="form-card" id="waitlist-form" novalidate>
+          <div class="type-toggle" role="group" aria-label="Bạn là ai?">
+            <button class="type-btn type-btn--cand selected" type="button" id="type-cand" aria-pressed="true">Ứng viên</button>
+            <button class="type-btn type-btn--rec" type="button" id="type-rec" aria-pressed="false">Nhà tuyển dụng</button>
+          </div>
+          <label class="form-label" for="gd-email">Email hoặc số điện thoại <span class="req">*</span></label>
+          <input class="form-input" id="gd-email" name="contact" type="text" inputmode="email" placeholder="ban@email.com" aria-describedby="form-error">
+          <div class="form-error" id="form-error" role="alert" hidden>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C93B3B" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="7.5" x2="12" y2="13"></line><circle cx="12" cy="16.4" r="0.5" fill="#C93B3B"></circle></svg>
+            <p id="form-error-msg"></p>
+          </div>
+          <label class="check-row">
+            <input class="check-input" type="checkbox" id="cb-consent">
+            <span class="check-box" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFF7EC" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5,13 10,18 19,7"></polyline></svg></span>
+            <span class="check-text">Tôi đồng ý để GoDart dùng thông tin này để liên hệ về chương trình trải nghiệm sớm. <span class="req">*</span></span>
+          </label>
+          <label class="check-row check-row--mkt">
+            <input class="check-input" type="checkbox" id="cb-marketing">
+            <span class="check-box" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFF7EC" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5,13 10,18 19,7"></polyline></svg></span>
+            <span class="check-text">Nhận thêm tin mới về việc làm và sản phẩm GoDart.</span>
+          </label>
+          <button class="btn-submit" type="submit" id="btn-submit">
+            <svg class="spin" id="submit-spinner" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FFF7EC" stroke-width="3" aria-hidden="true" hidden><path d="M12 3 A9 9 0 1 0 21 12"></path></svg>
+            <span id="submit-label">Tham gia waitlist</span>
+          </button>
+          <p class="form-note">GoDart chỉ dùng thông tin này để liên hệ về chương trình dùng thử.</p>
+        </form>
+
+        <div class="success-card" id="waitlist-success" hidden>
+          <div class="success-logo">
+            <span class="wave-origin" aria-hidden="true"><span class="wave"></span><span class="wave wave--2"></span></span>
+            <svg width="100" height="100" viewBox="0 0 120 120" aria-hidden="true"><circle cx="70" cy="60" r="30" fill="none" stroke="#6FC0EF" stroke-width="12"></circle><polygon points="12,34 70,60 12,86" fill="#F26B2C"></polygon></svg>
+          </div>
+          <h3 id="success-title" tabindex="-1">Đã giữ chỗ thành công.</h3>
+          <p class="msg">GoDart sẽ liên hệ khi nhóm dùng thử tiếp theo mở cửa. Không spam, chỉ nhắn tin đáng.</p>
+          <p class="tagline"><span class="hl-orange" style="color: #F26B2C;">Quẹt đúng hướng,</span> <span style="color: #2E8FCC;">chạm đúng việc.</span></p>
+          <button class="btn-outline" type="button" id="btn-form-reset">Đăng ký email khác</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="faq">
+      <div class="faq-title"><h2>Câu hỏi<br>thường gặp</h2></div>
+      <div class="faq-list" id="faq-list">
+{{FAQ_ITEMS}}
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ Footer ============ -->
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="brand">
+          <svg width="26" height="26" viewBox="0 0 96 96" aria-hidden="true"><circle cx="52" cy="48" r="28" fill="none" stroke="#6FC0EF" stroke-width="12"></circle><polygon points="4,21 52,48 4,75" fill="#FF8A4D"></polygon></svg>
+          <span class="wordmark"><span class="wm-go">Go</span><span class="wm-dart">Dart</span></span>
+        </div>
+        <p class="footer-tagline">{{footer.tagline}}</p>
+        <p class="footer-mail">{{footer.email}}</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <p class="footer-col-title">PHÁP LÝ</p>
+          <a href="#">Quyền riêng tư</a>
+          <a href="#">Điều khoản</a>
+        </div>
+        <div class="footer-col footer-col--social">
+          <p class="footer-col-title">THEO DÕI</p>
+          <div class="social-row">
+            <a href="#" aria-label="TikTok"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 3c.3 2.2 1.7 3.9 3.8 4.2v3c-1.4 0-2.7-.4-3.8-1.1v6.4c0 3.2-2.6 5.5-5.6 5.5S4.8 22.7 4.8 19.5c0-3 2.3-5.4 5.3-5.5v3.1c-1.2.1-2.2 1.1-2.2 2.4 0 1.4 1.1 2.5 2.5 2.5s2.5-1.1 2.5-2.6V3H16z"></path></svg></a>
+            <a href="#" aria-label="Instagram"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4.2"></circle><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none"></circle></svg></a>
+            <a href="#" aria-label="Facebook"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-8.4h2.8l.4-3.3h-3.2V7.2c0-.9.3-1.6 1.6-1.6h1.7V2.7C16.5 2.6 15.5 2.5 14.4 2.5c-2.3 0-3.9 1.4-3.9 4V9.3H7.7v3.3h2.8V21h3z"></path></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>{{footer.copyright}}</p>
+      <p class="made">Made in Vietnam</p>
+    </div>
+  </footer>
+</div>
+
+<!-- CTA nổi khi cuộn qua hero -->
+<div class="sticky-cta" id="sticky-cta">
+  <a href="#waitlist"><svg width="18" height="18" viewBox="0 0 96 96" aria-hidden="true"><circle cx="52" cy="48" r="28" fill="none" stroke="#FFF7EC" stroke-width="12"></circle><polygon points="4,21 52,48 4,75" fill="#FFF7EC"></polygon></svg>{{hero.cta_chinh}}</a>
+</div>
+
+<!-- Overlay "Trúng rồi!" khi quẹt phải -->
+<div class="match-overlay" id="match-overlay" role="dialog" aria-modal="true" aria-labelledby="match-title-h" hidden>
+  <div class="match-card">
+    <div class="match-logo">
+      <span class="wave-origin" aria-hidden="true"><span class="wave"></span><span class="wave wave--2"></span></span>
+      <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true"><circle cx="70" cy="60" r="32" fill="none" stroke="#6FC0EF" stroke-width="12"></circle><polygon points="10,32 70,60 10,88" fill="#F26B2C"></polygon></svg>
+    </div>
+    <h3 id="match-title-h">Trúng rồi!</h3>
+    <p class="msg">Bạn vừa quan tâm <strong id="match-title"></strong> tại <span id="match-company"></span>. Trong app thật, việc này sẽ vào mục Đã lưu để bạn ứng tuyển khi sẵn sàng.</p>
+    <div class="match-actions"><button class="btn-match" type="button" id="btn-match-close">Quẹt tiếp</button></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (sel) { return document.querySelector(sel); };
+  var reduceMotion = function () { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; };
+
+  /* ============ Deck thẻ quẹt ============ */
+  var jobs = {{JOBS_JSON}};
+  var REST = 'translateX(10px) rotate(3deg)';
+  var deck = { i: 0, down: false, flying: false, sx: 0, sy: 0 };
+
+  var topCard = $('#top-card'), doneCard = $('#deck-done');
+  var likeBadge = $('#badge-like'), nopeBadge = $('#badge-nope');
+
+  function renderDeck() {
+    var done = deck.i >= jobs.length;
+    topCard.hidden = done;
+    doneCard.hidden = !done;
+    if (done) return;
+    var j = jobs[deck.i];
+    $('#job-initial').textContent = j.initial;
+    $('#job-company').textContent = j.company;
+    $('#job-place').textContent = j.place + ' · ' + j.mode;
+    $('#job-match').textContent = j.match + ' hợp';
+    $('#job-title').textContent = j.title;
+    $('#job-salary').textContent = j.salary;
+    $('#job-reason').textContent = j.reason;
+  }
+
+  function resetCard(now) {
+    topCard.style.transition = now ? 'none' : 'transform 0.3s cubic-bezier(.2,.7,.3,1)';
+    topCard.style.transform = REST;
+    topCard.style.opacity = '1';
+    likeBadge.style.opacity = '0';
+    nopeBadge.style.opacity = '0';
+  }
+
+  function fly(dir) {
+    if (deck.flying || deck.i >= jobs.length) return;
+    deck.flying = true;
+    var job = jobs[deck.i];
+    topCard.style.transition = 'transform 0.4s ease-out, opacity 0.4s';
+    topCard.style.transform = 'translate(' + (dir * 560) + 'px,-30px) rotate(' + (dir * 18) + 'deg)';
+    topCard.style.opacity = '0';
+    setTimeout(function () {
+      if (dir > 0) openMatch(job);
+      deck.i += 1;
+      renderDeck();
+      setTimeout(function () { resetCard(true); deck.flying = false; }, 40);
+    }, 360);
+  }
+
+  topCard.addEventListener('pointerdown', function (e) {
+    if (reduceMotion() || deck.flying) return;
+    deck.down = true; deck.sx = e.clientX; deck.sy = e.clientY;
+    topCard.style.transition = 'none';
+    topCard.style.cursor = 'grabbing';
+    try { topCard.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+  topCard.addEventListener('pointermove', function (e) {
+    if (!deck.down) return;
+    var dx = e.clientX - deck.sx, dy = e.clientY - deck.sy;
+    topCard.style.transform = 'translate(' + (10 + dx) + 'px,' + dy + 'px) rotate(' + (3 + dx * 0.045) + 'deg)';
+    likeBadge.style.opacity = Math.max(0, Math.min(1, dx / 80));
+    nopeBadge.style.opacity = Math.max(0, Math.min(1, -dx / 90));
+  });
+  function dragEnd(e) {
+    if (!deck.down) return;
+    deck.down = false;
+    var dx = e.clientX - deck.sx;
+    topCard.style.cursor = 'grab';
+    if (dx > 100) fly(1);
+    else if (dx < -100) fly(-1);
+    else resetCard(false);
+  }
+  topCard.addEventListener('pointerup', dragEnd);
+  topCard.addEventListener('pointercancel', dragEnd);
+
+  $('#btn-skip').addEventListener('click', function () { fly(-1); });
+  $('#btn-save').addEventListener('click', function () { fly(1); });
+  $('#btn-interested').addEventListener('click', function () { fly(1); });
+  $('#btn-deck-reset').addEventListener('click', function () {
+    deck.i = 0;
+    renderDeck();
+    setTimeout(function () { resetCard(true); }, 40);
+  });
+
+  /* ============ Overlay "Trúng rồi!" ============ */
+  var overlay = $('#match-overlay'), matchBtn = $('#btn-match-close');
+  var lastFocus = null;
+
+  function openMatch(job) {
+    $('#match-title').textContent = job.title;
+    $('#match-company').textContent = job.company;
+    lastFocus = document.activeElement;
+    overlay.hidden = false;
+    matchBtn.focus();
+  }
+  function closeMatch() {
+    overlay.hidden = true;
+    if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
+  }
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeMatch(); });
+  matchBtn.addEventListener('click', closeMatch);
+  document.addEventListener('keydown', function (e) {
+    if (overlay.hidden) return;
+    if (e.key === 'Escape') closeMatch();
+    if (e.key === 'Tab') { e.preventDefault(); matchBtn.focus(); } // 1 nút duy nhất trong dialog
+  });
+
+  /* ============ CTA nổi + Header ẩn/hiện khi cuộn ============ */
+  var stickyCta = $('#sticky-cta');
+  var header = $('.site-header');
+  var lastY = window.scrollY || document.documentElement.scrollTop || 0;
+  var scrollStopTimer = null;
+  function onScroll() {
+    var y = window.scrollY || document.documentElement.scrollTop || 0;
+    stickyCta.classList.toggle('show', y > 640);
+    if (!reduceMotion()) {
+      // Đang cuộn xuống (và đã qua khỏi đỉnh) → mờ header; cuộn lên → hiện lại
+      if (y > lastY && y > 80) header.classList.add('gd-hide');
+      else if (y < lastY) header.classList.remove('gd-hide');
+      // Dừng cuộn ~260ms → hiện header trở lại
+      if (scrollStopTimer) clearTimeout(scrollStopTimer);
+      scrollStopTimer = setTimeout(function () { header.classList.remove('gd-hide'); }, 260);
+    }
+    lastY = y;
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ============ Fade-in nội dung khi cuộn tới ============ */
+  var revealSelectors = '.proof h2, .proof-sub, .point, .proof-cardwrap,' +
+    '.how h2, .how-sub, .how-journey, .step, .how-chip,' +
+    '.safety-copy, .safety-cardwrap,' +
+    '.quotes-head, .quotes-note, .quote,' +
+    '.waitlist-head, .waitlist-formwrap,' +
+    '.faq-title, .faq-item';
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll(revealSelectors));
+  if (!reduceMotion() && 'IntersectionObserver' in window && revealEls.length) {
+    // Trễ nhẹ theo thứ tự để các item cùng nhóm hiện lần lượt (stagger)
+    ['.point', '.step', '.quote', '.faq-item'].forEach(function (sel) {
+      Array.prototype.slice.call(document.querySelectorAll(sel)).forEach(function (el, i) {
+        el.style.transitionDelay = (i * 90) + 'ms';
+      });
+    });
+    revealEls.forEach(function (el) { el.classList.add('gd-reveal'); });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('is-visible'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    revealEls.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ============ Form waitlist ============ */
+  var form = $('#waitlist-form'), successCard = $('#waitlist-success');
+  var emailInput = $('#gd-email'), errorBox = $('#form-error'), errorMsg = $('#form-error-msg');
+  var consentCb = $('#cb-consent'), mktCb = $('#cb-marketing');
+  var submitBtn = $('#btn-submit'), submitLabel = $('#submit-label'), spinner = $('#submit-spinner');
+  var typeCand = $('#type-cand'), typeRec = $('#type-rec');
+  var userType = 'candidate';
+  var formState = 'idle'; // idle | error | loading | success
+  var errorText = '';
+
+  /* ====================================================================
+     NỐI GOOGLE SHEET: dán "URL ứng dụng web" của Google Apps Script vào
+     giữa 2 dấu nháy dưới đây (dạng https://script.google.com/macros/s/…/exec).
+     Hướng dẫn từng bước: HUONG_DAN_TRIEN_KHAI.md cùng thư mục.
+     Để trống '' = chế độ demo (không gửi đi đâu, chỉ mô phỏng thành công).
+     ==================================================================== */
+  var WAITLIST_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwrtF0cfXe80EOoPN09IaylAboJNt4dnuTZTT1ZExsTJWM-V6SsvzBSQbaDCGUProJu/exec';
+
+  function submitWaitlist(data) {
+    if (!WAITLIST_ENDPOINT) {
+      return new Promise(function (resolve) { setTimeout(resolve, 1400); }); // demo
+    }
+    var body = new URLSearchParams();
+    body.append('type', data.type);
+    body.append('contact', data.contact);
+    body.append('consent', 'yes'); // form chỉ gửi được khi đã tick đồng ý
+    body.append('marketing', data.marketing ? 'yes' : 'no');
+    body.append('source', location.href);
+    var ctrl = new AbortController();
+    var timer = setTimeout(function () { ctrl.abort(); }, 12000);
+    // URLSearchParams => request "đơn giản" (không preflight); Apps Script đọc qua e.parameter
+    return fetch(WAITLIST_ENDPOINT, { method: 'POST', body: body, signal: ctrl.signal })
+      .then(function (res) {
+        clearTimeout(timer);
+        // Apps Script trả về sau redirect; response 'opaque' cũng tính là đã gửi
+        if (!(res.ok || res.type === 'opaque')) throw new Error('HTTP ' + res.status);
+      })
+      .catch(function (err) { clearTimeout(timer); throw err; });
+  }
+
+  function renderForm() {
+    var err = formState === 'error';
+    var loading = formState === 'loading';
+    errorBox.hidden = !err;
+    if (err) errorMsg.textContent = errorText;
+    emailInput.classList.toggle('is-error', err);
+    emailInput.setAttribute('aria-invalid', err ? 'true' : 'false');
+    submitBtn.classList.toggle('loading', loading);
+    submitBtn.setAttribute('aria-busy', loading ? 'true' : 'false');
+    submitLabel.textContent = loading ? 'Đang gửi…' : 'Tham gia waitlist';
+    spinner.hidden = !loading;
+    typeCand.classList.toggle('selected', userType === 'candidate');
+    typeCand.setAttribute('aria-pressed', userType === 'candidate' ? 'true' : 'false');
+    typeRec.classList.toggle('selected', userType === 'recruiter');
+    typeRec.setAttribute('aria-pressed', userType === 'recruiter' ? 'true' : 'false');
+    form.hidden = formState === 'success';
+    successCard.hidden = formState !== 'success';
+  }
+
+  function clearError() {
+    if (formState === 'error') { formState = 'idle'; renderForm(); }
+  }
+
+  typeCand.addEventListener('click', function () { userType = 'candidate'; renderForm(); });
+  typeRec.addEventListener('click', function () { userType = 'recruiter'; renderForm(); });
+  emailInput.addEventListener('input', clearError);
+  consentCb.addEventListener('change', clearError);
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (formState === 'loading') return;
+    var v = emailInput.value.trim();
+    var okEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);
+    var okPhone = /^0\d{9}$/.test(v.replace(/\s/g, ''));
+    if (!(okEmail || okPhone) || !consentCb.checked) {
+      errorText = !consentCb.checked
+        ? 'Bạn nhập email/SĐT hợp lệ và tick đồng ý giúp mình nhé.'
+        : 'Email hoặc số điện thoại chưa đúng. Bạn kiểm tra lại nhé.';
+      formState = 'error';
+      renderForm();
+      return;
+    }
+    formState = 'loading';
+    renderForm();
+    submitWaitlist({ type: userType, contact: v, marketing: mktCb.checked }).then(function () {
+      formState = 'success';
+      renderForm();
+      $('#success-title').focus();
+    }).catch(function () {
+      errorText = 'Gửi chưa thành công — có thể do mạng. Bạn thử lại giúp mình nhé.';
+      formState = 'error';
+      renderForm();
+    });
+  });
+
+  $('#btn-form-reset').addEventListener('click', function () {
+    formState = 'idle';
+    emailInput.value = '';
+    consentCb.checked = false;
+    mktCb.checked = false;
+    renderForm();
+    emailInput.focus();
+  });
+
+  /* ============ FAQ ============ */
+  var faqButtons = Array.prototype.slice.call(document.querySelectorAll('.faq-q'));
+  var openFaq = 0;
+  function renderFaq() {
+    faqButtons.forEach(function (btn, idx) {
+      var open = idx === openFaq;
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.querySelector('.faq-sign').textContent = open ? '–' : '+';
+      document.getElementById('faq-a-' + idx).hidden = !open;
+    });
+  }
+  faqButtons.forEach(function (btn, idx) {
+    btn.addEventListener('click', function () {
+      openFaq = openFaq === idx ? null : idx;
+      renderFaq();
+    });
+  });
+
+  renderDeck();
+  renderForm();
+})();
+</script>
+</body>
+</html>
