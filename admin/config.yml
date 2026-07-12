@@ -30,3 +30,30 @@ logo_url: https://decapbridge.com/decapcms-with-bridge.svg
 
 # Add site links in Decap CMS (optional)
 site_url: https://godart.vn
+display_url: https://godart.vn
+
+# Store uploaded media in the repository
+media_folder: public/uploads
+public_folder: /uploads
+
+# Content types shown in Decap CMS
+collections:
+  - name: pages
+    label: Nội dung website
+    label_singular: Trang nội dung
+    folder: content/pages
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - label: Tiêu đề
+        name: title
+        widget: string
+      - label: Ảnh đại diện
+        name: image
+        widget: image
+        required: false
+      - label: Nội dung
+        name: body
+        widget: richtext
