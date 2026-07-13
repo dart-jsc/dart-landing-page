@@ -9,6 +9,13 @@ const path = require('path');
 
 const ROOT = __dirname;
 const content = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'site.json'), 'utf8'));
+// Ô mới thêm sau này (site.json cũ có thể chưa có key) — mặc định để build không fail.
+// Lưu ý: chỉ áp khi key KHÔNG TỒN TẠI; người dùng chủ động xoá trắng ô ('' ) vẫn được tôn trọng.
+if (content.how) {
+  if (content.how.chip_truoc == null) content.how.chip_truoc = 'Quẹt phải';
+  if (content.how.chip_cam == null) content.how.chip_cam = 'không';
+  if (content.how.chip_sau == null) content.how.chip_sau = 'tự động gửi CV — bạn luôn kiểm soát việc chia sẻ hồ sơ.';
+}
 let html = fs.readFileSync(path.join(ROOT, 'template.html'), 'utf8');
 
 // Chữ từ CMS luôn được escape để không phá vỡ HTML
