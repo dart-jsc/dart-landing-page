@@ -1,43 +1,44 @@
 {
-  "seo": {
-    "title": "GoDart — Quẹt đúng hướng, chạm đúng việc.",
-    "description": "GoDart — ứng dụng tìm việc kiểu quẹt cho người trẻ Việt Nam: lương rõ ràng trước khi quẹt, biết vì sao việc phù hợp, và được nhắc khi tin tuyển dụng có dấu hiệu đáng ngờ. Tham gia waitlist để trải nghiệm sớm."
+  "proof": {
+    "h2": "Trước khi quẹt, bạn đã biết đủ để quyết định.",
+    "sub": "Mỗi thẻ việc trên GoDart nói thẳng ba điều quan trọng nhất — ngay trước mắt.",
+    "p1": {
+      "label": "LƯƠNG",
+      "title": "12–16 triệu — thấy trước khi quẹt.",
+      "desc": "Không chờ tới vòng phỏng vấn mới biết mức lương."
+    },
+    "p2": {
+      "label": "PHÙ HỢP",
+      "title": "Biết vì sao việc này hợp.",
+      "desc": "Dựa trên vị trí, kỹ năng, kinh nghiệm và mong muốn của bạn."
+    },
+    "p3": {
+      "label": "CẢNH BÁO",
+      "title": "Dấu hiệu đáng ngờ hiện trước.",
+      "desc": "Đòi đặt cọc, xin OTP hay chuyển tiền sẽ được nhắc."
+    },
+    "card_reason": "khớp kỹ năng Content & Ads · đúng mức lương bạn mong muốn · công ty đã xác minh.",
+    "card_warn": "Cần kiểm tra: tin chưa nêu rõ quy mô team."
   },
   "header": {
     "cta": "Tham gia waitlist"
   },
-  "hero": {
-    "badge": "Sắp ra mắt · đang mở nhóm dùng thử đầu tiên",
-    "line1": "Quẹt đúng hướng,",
-    "line2_cam": "chạm",
-    "line2_xanh": "đúng việc.",
-    "sub": "Khám phá việc bằng thao tác quẹt. Xem lương trước, biết vì sao phù hợp, và nhận nhắc khi tin có dấu hiệu đáng ngờ.",
-    "cta_chinh": "Tham gia nhóm dùng thử",
-    "cta_phu": "Xem GoDart hoạt động",
-    "note": "Miễn phí · Không tự động gửi CV · Không spam"
-  },
-  "jobs": [
-    { "company": "Nova Retail", "place": "TP.HCM", "mode": "Hybrid", "title": "Marketing Executive", "salary": "12 – 16 triệu ₫", "match": "86%", "reason": "khớp kỹ năng Content & Ads · đúng mức lương bạn mong muốn" },
-    { "company": "Mây Creative", "place": "Quận 1", "mode": "Hybrid", "title": "UI/UX Designer", "salary": "10 – 13 triệu ₫", "match": "82%", "reason": "khớp Figma & prototyping · cách nhà bạn 4km" },
-    { "company": "Velo Fintech", "place": "Quận 3", "mode": "Onsite", "title": "Product Design Intern", "salary": "7 – 9 triệu ₫", "match": "91%", "reason": "phù hợp fresh graduate · có mentor 1-1" },
-    { "company": "Sen Agency", "place": "Bình Thạnh", "mode": "Remote", "title": "Content Creator", "salary": "9 – 12 triệu ₫", "match": "78%", "reason": "khớp kỹ năng viết & dựng video ngắn" }
-  ],
-  "proof": {
-    "h2": "Trước khi quẹt, bạn đã biết đủ để quyết định.",
-    "sub": "Mỗi thẻ việc trên GoDart nói thẳng ba điều quan trọng nhất — ngay trước mắt.",
-    "p1": { "label": "LƯƠNG", "title": "12–16 triệu — thấy trước khi quẹt.", "desc": "Không chờ tới vòng phỏng vấn mới biết mức lương." },
-    "p2": { "label": "PHÙ HỢP", "title": "Biết vì sao việc này hợp.", "desc": "Dựa trên vị trí, kỹ năng, kinh nghiệm và mong muốn của bạn." },
-    "p3": { "label": "CẢNH BÁO", "title": "Dấu hiệu đáng ngờ hiện trước.", "desc": "Đòi đặt cọc, xin OTP hay chuyển tiền sẽ được nhắc." },
-    "card_reason": "khớp kỹ năng Content & Ads · đúng mức lương bạn mong muốn · công ty đã xác minh.",
-    "card_warn": "Cần kiểm tra: tin chưa nêu rõ quy mô team."
-  },
   "how": {
     "h2": "Từ hồ sơ tới ứng tuyển, chỉ ba bước.",
-    "sub": "Bạn cầm lái ở mọi bước — nhất là bước gửi CV.",
+    "sub": "Chủ động lên kế hoạch trong các bước.",
     "steps": [
-      { "title": "Tạo hồ sơ", "body": "Tải CV hoặc điền nhanh thông tin công việc mong muốn." },
-      { "title": "Quẹt việc phù hợp", "body": "Xem lương, mức độ phù hợp và điểm cần kiểm tra trước khi quyết định." },
-      { "title": "Xác nhận ứng tuyển", "body": "CV chỉ được gửi sau khi bạn chủ động xác nhận." }
+      {
+        "title": "Tạo hồ sơ",
+        "body": "Tải CV hoặc điền nhanh thông tin công việc mong muốn."
+      },
+      {
+        "title": "Quẹt việc phù hợp",
+        "body": "Xem lương, mức độ phù hợp và điểm cần kiểm tra trước khi quyết định."
+      },
+      {
+        "title": "Xác nhận ứng tuyển",
+        "body": "CV chỉ được gửi sau khi bạn chủ động xác nhận."
+      }
     ]
   },
   "safety": {
@@ -55,6 +56,71 @@
     "card_warn_title": "Tin tuyển dụng có điểm cần kiểm tra",
     "card_warn_body": "Tin này yêu cầu chuyển phí giữ chỗ 500.000đ trước khi phỏng vấn — dấu hiệu rủi ro cao. GoDart không thu phí."
   },
+  "waitlist": {
+    "h2_line1": "Giữ chỗ trước khi",
+    "h2_line2": "GoDart mở cửa.",
+    "sub": "Để lại thông tin để nhận lời mời trải nghiệm sớm và góp ý trực tiếp cho đội ngũ phát triển."
+  },
+  "jobs": [
+    {
+      "company": "Nova Retail",
+      "place": "TP.HCM",
+      "mode": "Hybrid",
+      "title": "Marketing Executive",
+      "salary": "12 – 16 triệu ₫",
+      "match": "86%",
+      "reason": "khớp kỹ năng Content & Ads · đúng mức lương bạn mong muốn"
+    },
+    {
+      "company": "Mây Creative",
+      "place": "Quận 1",
+      "mode": "Hybrid",
+      "title": "UI/UX Designer",
+      "salary": "10 – 13 triệu ₫",
+      "match": "82%",
+      "reason": "khớp Figma & prototyping · cách nhà bạn 4km"
+    },
+    {
+      "company": "Velo Fintech",
+      "place": "Quận 3",
+      "mode": "Onsite",
+      "title": "Product Design Intern",
+      "salary": "7 – 9 triệu ₫",
+      "match": "91%",
+      "reason": "phù hợp fresh graduate · có mentor 1-1"
+    },
+    {
+      "company": "Sen Agency",
+      "place": "Bình Thạnh",
+      "mode": "Remote",
+      "title": "Content Creator",
+      "salary": "9 – 12 triệu ₫",
+      "match": "78%",
+      "reason": "khớp kỹ năng viết & dựng video ngắn"
+    }
+  ],
+  "faq": [
+    {
+      "q": "GoDart là gì?",
+      "a": "Ứng dụng tìm việc kiểu quẹt cho người trẻ Việt Nam: lương rõ ràng, hiểu vì sao một việc phù hợp, và được nhắc khi tin có dấu hiệu đáng ngờ."
+    },
+    {
+      "q": "Quẹt phải có tự động gửi CV không?",
+      "a": "Không. Quẹt phải chỉ là đánh dấu quan tâm. Hồ sơ của bạn chỉ được gửi sau khi bạn xem lại và bấm xác nhận."
+    },
+    {
+      "q": "Tham gia waitlist có mất phí không?",
+      "a": "Hoàn toàn miễn phí. GoDart không thu bất kỳ khoản phí nào từ người tìm việc."
+    },
+    {
+      "q": "GoDart xử lý các tin tuyển dụng đáng ngờ như thế nào?",
+      "a": "Mình nêu rõ dấu hiệu cần kiểm tra (đòi đặt cọc, xin OTP, chuyển tiền…) và cho bạn báo cáo nhanh. GoDart giúp bạn cảnh giác hơn, nhưng không thể loại bỏ tuyệt đối — bạn vẫn nên tự kiểm tra."
+    },
+    {
+      "q": "Khi nào GoDart ra mắt?",
+      "a": "GoDart đang trong giai đoạn thử nghiệm và mở dần theo từng nhóm. Đăng ký waitlist để được mời sớm khi nhóm phù hợp với khu vực của bạn mở cửa."
+    }
+  ],
   "quotes": {
     "h2": "GoDart đang được xây cùng những người tìm việc đầu tiên.",
     "badge": "TRÍCH KHẢO SÁT · PLACEHOLDER",
@@ -65,21 +131,23 @@
       "Ứng dụng tìm việc nhanh thì tốt, nhưng tôi vẫn muốn tự quyết định khi nào gửi CV."
     ]
   },
-  "waitlist": {
-    "h2_line1": "Giữ chỗ trước khi",
-    "h2_line2": "GoDart mở cửa.",
-    "sub": "Để lại thông tin để nhận lời mời trải nghiệm sớm và góp ý trực tiếp cho đội ngũ phát triển."
+  "hero": {
+    "badge": "Sắp ra mắt · đang mở nhóm dùng thử đầu tiên",
+    "line1": "Quẹt đúng hướng,",
+    "line2_cam": "chạm",
+    "line2_xanh": "đúng việc.",
+    "sub": "Khám phá việc bằng thao tác quẹt. Xem lương trước, biết vì sao phù hợp, và nhận nhắc khi tin có dấu hiệu đáng ngờ.",
+    "cta_chinh": "Tham gia nhóm dùng thử",
+    "cta_phu": "Xem GoDart hoạt động",
+    "note": "Miễn phí · Không tự động gửi CV · Không spam"
   },
-  "faq": [
-    { "q": "GoDart là gì?", "a": "Ứng dụng tìm việc kiểu quẹt cho người trẻ Việt Nam: lương rõ ràng, hiểu vì sao một việc phù hợp, và được nhắc khi tin có dấu hiệu đáng ngờ." },
-    { "q": "Quẹt phải có tự động gửi CV không?", "a": "Không. Quẹt phải chỉ là đánh dấu quan tâm. Hồ sơ của bạn chỉ được gửi sau khi bạn xem lại và bấm xác nhận." },
-    { "q": "Tham gia waitlist có mất phí không?", "a": "Hoàn toàn miễn phí. GoDart không thu bất kỳ khoản phí nào từ người tìm việc." },
-    { "q": "GoDart xử lý các tin tuyển dụng đáng ngờ như thế nào?", "a": "Mình nêu rõ dấu hiệu cần kiểm tra (đòi đặt cọc, xin OTP, chuyển tiền…) và cho bạn báo cáo nhanh. GoDart giúp bạn cảnh giác hơn, nhưng không thể loại bỏ tuyệt đối — bạn vẫn nên tự kiểm tra." },
-    { "q": "Khi nào GoDart ra mắt?", "a": "GoDart đang trong giai đoạn thử nghiệm và mở dần theo từng nhóm. Đăng ký waitlist để được mời sớm khi nhóm phù hợp với khu vực của bạn mở cửa." }
-  ],
   "footer": {
     "tagline": "Quẹt đúng hướng, chạm đúng việc.",
     "email": "hello@godart.vn",
     "copyright": "© 2026 GoDart. Đang trong giai đoạn phát triển & thử nghiệm."
+  },
+  "seo": {
+    "title": "GoDart — Quẹt đúng hướng, chạm đúng việc.",
+    "description": "GoDart — ứng dụng tìm việc kiểu quẹt cho người trẻ Việt Nam: lương rõ ràng trước khi quẹt, biết vì sao việc phù hợp, và được nhắc khi tin tuyển dụng có dấu hiệu đáng ngờ. Tham gia waitlist để trải nghiệm sớm."
   }
 }
