@@ -67,6 +67,44 @@ const faqItems = content.faq.map(function (f, i) {
 }).join('\n');
 html = html.replace('{{FAQ_ITEMS}}', faqItems);
 
+/* ---------- SEO: JSON-LD (Organization + WebSite + FAQPage) ---------- */
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://godart.vn/#org',
+      name: 'GoDart',
+      url: 'https://godart.vn/',
+      email: 'hello@godart.vn',
+      description: content.seo.description,
+      areaServed: 'VN'
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://godart.vn/#website',
+      name: 'GoDart',
+      url: 'https://godart.vn/',
+      inLanguage: 'vi',
+      publisher: { '@id': 'https://godart.vn/#org' }
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': 'https://godart.vn/#faq',
+      inLanguage: 'vi',
+      mainEntity: content.faq.map(function (f) {
+        return {
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a }
+        };
+      })
+    }
+  ]
+};
+html = html.replace('{{JSONLD}}', JSON.stringify(jsonld).replace(/</g, '\\u003c'));
+
 /* ---------- Các token đơn {{a.b.c}} ---------- */
 
 const tokens = {};
@@ -98,4 +136,11 @@ fs.rmSync(DIST, { recursive: true, force: true });
 fs.mkdirSync(DIST, { recursive: true });
 fs.writeFileSync(path.join(DIST, 'index.html'), html);
 fs.cpSync(path.join(ROOT, 'admin'), path.join(DIST, 'admin'), { recursive: true });
-console.log('OK: dist/index.html (' + html.length + ' bytes) + dist/admin/');
+// Copy file tĩnh SEO (robots.txt, sitemap.xml, og-image.png, ...) từ static/ vào dist/
+const STATIC = path.join(ROOT, 'static');
+if (fs.existsSync(STATIC)) {
+  fs.readdirSync(STATIC).forEach(function (f) {
+    fs.copyFileSync(path.join(STATIC, f), path.join(DIST, f));
+  });
+}
+console.log('OK: dist/index.html (' + html.length + ' bytes) + dist/admin/ + static SEO files');
