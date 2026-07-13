@@ -129,6 +129,9 @@ collections:
             fields:
               - { label: "Tiêu đề mục", name: h2, widget: string }
               - { label: "Mô tả mục", name: sub, widget: string }
+              - { label: "Câu cam kết (khung trắng) — phần đầu", name: chip_truoc, widget: string, hint: "vd: Quẹt phải" }
+              - { label: "Câu cam kết — chữ MÀU CAM ở giữa", name: chip_cam, widget: string, required: false, hint: "vd: không (để trống nếu không cần tô cam)" }
+              - { label: "Câu cam kết — phần sau", name: chip_sau, widget: string, hint: "vd: tự động gửi CV — bạn luôn kiểm soát việc chia sẻ hồ sơ." }
               - label: "Các bước (đúng 3 bước)"
                 name: steps
                 widget: list
