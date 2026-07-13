@@ -1,7 +1,7 @@
 {
   "proof": {
-    "h2": "Trước khi quẹt, bạn đã biết đủ để quyết định.",
-    "sub": "Mỗi thẻ việc trên GoDart nói thẳng ba điều quan trọng nhất — ngay trước mắt.",
+    "h2": "Tại sao chọn GoDart?",
+    "sub": "Tìm việc nhanh hơn, rõ ràng hơn và an tâm hơn",
     "p1": {
       "label": "LƯƠNG",
       "title": "12–16 triệu — thấy trước khi quẹt.",
@@ -21,7 +21,7 @@
     "card_warn": "Cần kiểm tra: tin chưa nêu rõ quy mô team."
   },
   "header": {
-    "cta": "Tham gia waitlist"
+    "cta": "Đăng ký trải nghiệm sớm ứng dụng tìm việc GoDart"
   },
   "how": {
     "h2": "Từ hồ sơ tới ứng tuyển, chỉ ba bước.",
@@ -133,13 +133,13 @@
   },
   "hero": {
     "badge": "Sắp ra mắt · đang mở nhóm dùng thử đầu tiên",
-    "line1": "Quẹt đúng hướng,",
+    "line1": "Swipe đúng hướng,",
     "line2_cam": "chạm",
     "line2_xanh": "đúng việc.",
-    "sub": "Khám phá việc bằng thao tác quẹt. Xem lương trước, biết vì sao phù hợp, và nhận nhắc khi tin có dấu hiệu đáng ngờ.",
-    "cta_chinh": "Tham gia nhóm dùng thử",
+    "sub": "GoDart giúp sinh viên, người mới ra trường và người trẻ tìm việc nhanh hơn bằng trải nghiệm quẹt trực quan. Xem công việc phù hợp, mức lương rõ ràng và các dấu hiệu cần lưu ý trước khi ứng tuyển.",
+    "cta_chinh": "Đăng ký trải nghiệm sớm",
     "cta_phu": "Xem GoDart hoạt động",
-    "note": "Miễn phí · Không tự động gửi CV · Không spam"
+    "note": "Miễn phí · Tiện lợi · Minh bạch"
   },
   "footer": {
     "tagline": "Quẹt đúng hướng, chạm đúng việc.",
@@ -147,7 +147,7 @@
     "copyright": "© 2026 GoDart. Đang trong giai đoạn phát triển & thử nghiệm."
   },
   "seo": {
-    "title": "GoDart — Quẹt đúng hướng, chạm đúng việc.",
-    "description": "GoDart — ứng dụng tìm việc kiểu quẹt cho người trẻ Việt Nam: lương rõ ràng trước khi quẹt, biết vì sao việc phù hợp, và được nhắc khi tin tuyển dụng có dấu hiệu đáng ngờ. Tham gia waitlist để trải nghiệm sớm."
+    "title": "GoDart – App tìm việc nhanh cho người trẻ Việt Nam",
+    "description": "GoDart là ứng dụng tìm việc dành cho sinh viên và người trẻ Việt Nam. Khám phá việc làm phù hợp bằng thao tác quẹt, xem mức lương rõ ràng và nhận cảnh báo về tin tuyển dụng đáng ngờ. Tham gia waitlist để trải nghiệm sớm."
   }
 }
