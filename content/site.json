@@ -39,26 +39,29 @@
         "title": "Xem chi tiết và ứng tuyển",
         "body": "Kiểm tra mức độ phù hợp, yêu cầu công việc và thông tin nhà tuyển dụng trước khi quyết định ứng tuyển."
       }
-    ]
+    ],
+    "chip_truoc": "Quẹt phải để",
+    "chip_cam": "tự động",
+    "chip_sau": "gửi CV tới công việc bạn yêu thích"
   },
   "safety": {
-    "line1": "Đi nhanh hơn,",
-    "line2": "không có nghĩa là",
-    "line3_cam": "bỏ qua cảnh báo.",
+    "line1": "Sẵn sàng tìm",
+    "line2": "công việc phù hợp",
+    "line3_cam": "theo cách mới?",
     "items": [
       "GoDart không bao giờ yêu cầu bạn đặt cọc để tìm việc.",
       "Đừng gửi OTP hay thông tin ngân hàng cho nhà tuyển dụng.",
       "Xem trạng thái xác minh của doanh nghiệp trước khi tương tác.",
-      "Báo cáo ngay khi một tin tuyển dụng có dấu hiệu bất thường."
+      "Báo cáo ngay khi phát hiện tin tuyển dụng có dấu hiệu bất thường."
     ],
     "card_title": "Tuyển gấp CTV nhập liệu",
     "card_status": "Chưa xác minh",
     "card_warn_title": "Tin tuyển dụng có điểm cần kiểm tra",
-    "card_warn_body": "Tin này yêu cầu chuyển phí giữ chỗ 500.000đ trước khi phỏng vấn — dấu hiệu rủi ro cao. GoDart không thu phí."
+    "card_warn_body": "Tin này yêu cầu chuyển phí giữ chỗ 500.000đ trước khi phỏng vấn — dấu hiệu rủi ro cao. "
   },
   "waitlist": {
     "h2_line1": "Giữ chỗ trước khi",
-    "h2_line2": "GoDart mở cửa.",
+    "h2_line2": "GoDart mở cửa chính thức.",
     "sub": "Để lại thông tin để nhận lời mời trải nghiệm sớm và góp ý trực tiếp cho đội ngũ phát triển."
   },
   "jobs": [
@@ -106,7 +109,7 @@
     },
     {
       "q": "Quẹt phải có tự động gửi CV không?",
-      "a": "Không. Quẹt phải chỉ là đánh dấu quan tâm. Hồ sơ của bạn chỉ được gửi sau khi bạn xem lại và bấm xác nhận."
+      "a": "Có. Khi bạn quẹt phải, hồ sơ sẽ được gửi đến nhà tuyển dụng. AI của GoDart sẽ đồng thời đánh giá mức độ phù hợp của bạn với vị trí."
     },
     {
       "q": "Tham gia waitlist có mất phí không?",
@@ -118,17 +121,17 @@
     },
     {
       "q": "Khi nào GoDart ra mắt?",
-      "a": "GoDart đang trong giai đoạn thử nghiệm và mở dần theo từng nhóm. Đăng ký waitlist để được mời sớm khi nhóm phù hợp với khu vực của bạn mở cửa."
+      "a": "GoDart đang trong giai đoạn thử nghiệm và sẽ mở quyền truy cập theo từng đợt. Đăng ký danh sách chờ để nhận thông báo và trở thành một trong những người đầu tiên trải nghiệm ứng dụng."
     }
   ],
   "quotes": {
-    "h2": "GoDart đang được xây cùng những người tìm việc đầu tiên.",
+    "h2": "Gia nhập danh sách trải nghiệm sớm của GoDart để nhận thông báo ra mắt và cơ hội dùng thử trước.",
     "badge": "TRÍCH KHẢO SÁT · PLACEHOLDER",
-    "note": "Trích phản hồi thật từ khảo sát người dùng — đội ngũ sẽ thay bằng nội dung đã xin phép trước khi publish.",
+    "note": "Trích phản hồi thật từ khảo sát người dùng",
     "items": [
       "Tôi muốn biết lương trước khi mất thời gian đọc hết JD.",
-      "Điều tôi sợ nhất là gửi CV xong không biết chuyện gì xảy ra tiếp theo.",
-      "Ứng dụng tìm việc nhanh thì tốt, nhưng tôi vẫn muốn tự quyết định khi nào gửi CV."
+      "Tôi cảm thấy hào hứng và thú vị hơn khi sử dụng GoDart để tìm việc.",
+      "Tôi mất quá nhiều thời gian đi tìm việc, nhờ GoDart tôi đã tiết kiệm được rất nhiều thời gian."
     ]
   },
   "hero": {
@@ -142,7 +145,7 @@
     "note": "Miễn phí · Tiện lợi · Minh bạch"
   },
   "footer": {
-    "tagline": "Quẹt đúng hướng, chạm đúng việc.",
+    "tagline": "Swipe đúng hướng, chạm đúng việc.",
     "email": "hello@godart.vn",
     "copyright": "© 2026 GoDart. Đang trong giai đoạn phát triển & thử nghiệm."
   },
