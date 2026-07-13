@@ -3,19 +3,19 @@
     "h2": "Tại sao chọn GoDart?",
     "sub": "Tìm việc nhanh hơn, rõ ràng hơn và an tâm hơn",
     "p1": {
-      "label": "LƯƠNG",
-      "title": "12–16 triệu — thấy trước khi quẹt.",
-      "desc": "Không chờ tới vòng phỏng vấn mới biết mức lương."
+      "label": "KHÁM PHÁ VIỆC LÀM ",
+      "title": "Thao tác swipe tiện lợi",
+      "desc": "Xem nhanh từng cơ hội việc làm và quyết định theo cách trực quan. Quẹt phải khi bạn quan tâm, quẹt trái để chuyển sang công việc tiếp theo."
     },
     "p2": {
-      "label": "PHÙ HỢP",
-      "title": "Biết vì sao việc này hợp.",
-      "desc": "Dựa trên vị trí, kỹ năng, kinh nghiệm và mong muốn của bạn."
+      "label": "CÔNG KHAI MINH BẠCH",
+      "title": "Xem mức lương rõ ràng",
+      "desc": "GoDart ưu tiên các tin tuyển dụng công khai mức lương, địa điểm và hình thức làm việc để bạn đánh giá trước khi ứng tuyển."
     },
     "p3": {
       "label": "CẢNH BÁO",
-      "title": "Dấu hiệu đáng ngờ hiện trước.",
-      "desc": "Đòi đặt cọc, xin OTP hay chuyển tiền sẽ được nhắc."
+      "title": "Nhận diện dấu hiệu tuyển dụng đáng ngờ",
+      "desc": "Hệ thống hỗ trợ phân tích và cảnh báo những dấu hiệu bất thường như yêu cầu đặt cọc, thông tin mập mờ hoặc lời mời “việc nhẹ, lương cao”."
     },
     "card_reason": "khớp kỹ năng Content & Ads · đúng mức lương bạn mong muốn · công ty đã xác minh.",
     "card_warn": "Cần kiểm tra: tin chưa nêu rõ quy mô team."
@@ -24,20 +24,20 @@
     "cta": "Đăng ký trải nghiệm sớm ứng dụng tìm việc GoDart"
   },
   "how": {
-    "h2": "Từ hồ sơ tới ứng tuyển, chỉ ba bước.",
-    "sub": "Chủ động lên kế hoạch trong các bước.",
+    "h2": "GoDart hoạt động thế nào?",
+    "sub": "Ba bước để bắt đầu tìm việc",
     "steps": [
       {
-        "title": "Tạo hồ sơ",
-        "body": "Tải CV hoặc điền nhanh thông tin công việc mong muốn."
+        "title": "Hoàn thiện hồ sơ",
+        "body": "Thêm kỹ năng, kinh nghiệm, địa điểm và công việc mong muốn để GoDart hiểu bạn đang tìm kiếm điều gì."
       },
       {
-        "title": "Quẹt việc phù hợp",
-        "body": "Xem lương, mức độ phù hợp và điểm cần kiểm tra trước khi quyết định."
+        "title": "Khám phá việc làm phù hợp",
+        "body": "Xem các công việc được sắp xếp theo hồ sơ và lựa chọn của bạn. Càng sử dụng, trải nghiệm gợi ý càng được cá nhân hóa."
       },
       {
-        "title": "Xác nhận ứng tuyển",
-        "body": "CV chỉ được gửi sau khi bạn chủ động xác nhận."
+        "title": "Xem chi tiết và ứng tuyển",
+        "body": "Kiểm tra mức độ phù hợp, yêu cầu công việc và thông tin nhà tuyển dụng trước khi quyết định ứng tuyển."
       }
     ]
   },
