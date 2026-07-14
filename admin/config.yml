@@ -173,6 +173,8 @@ collections:
               - { label: "Tiêu đề — dòng 1", name: h2_line1, widget: string }
               - { label: "Tiêu đề — dòng 2", name: h2_line2, widget: string }
               - { label: "Mô tả", name: sub, widget: text }
+              - { label: "Bộ đếm — chữ sau con số", name: counter_sau, widget: string, hint: "vd: người đã giữ chỗ dùng thử sớm. Số lượng lấy TỰ ĐỘNG từ Google Sheet." }
+              - { label: "Bộ đếm — ngưỡng tối thiểu để hiện", name: counter_toi_thieu, widget: number, value_type: int, min: 1, hint: "Dưới ngưỡng này bộ đếm tự ẩn (số nhỏ quá gây phản tác dụng). Đặt 1 nếu muốn luôn hiện." }
 
           - label: "Câu hỏi thường gặp (FAQ)"
             name: faq

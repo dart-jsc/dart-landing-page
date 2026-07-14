@@ -16,6 +16,10 @@ if (content.how) {
   if (content.how.chip_cam == null) content.how.chip_cam = 'không';
   if (content.how.chip_sau == null) content.how.chip_sau = 'tự động gửi CV — bạn luôn kiểm soát việc chia sẻ hồ sơ.';
 }
+if (content.waitlist) {
+  if (content.waitlist.counter_sau == null) content.waitlist.counter_sau = 'người đã giữ chỗ dùng thử sớm';
+  if (content.waitlist.counter_toi_thieu == null) content.waitlist.counter_toi_thieu = 10;
+}
 let html = fs.readFileSync(path.join(ROOT, 'template.html'), 'utf8');
 
 // Chữ từ CMS luôn được escape để không phá vỡ HTML

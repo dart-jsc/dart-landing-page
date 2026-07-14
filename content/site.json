@@ -62,7 +62,9 @@
   "waitlist": {
     "h2_line1": "Giữ chỗ trước khi",
     "h2_line2": "GoDart mở cửa chính thức.",
-    "sub": "Để lại thông tin để nhận lời mời trải nghiệm sớm và góp ý trực tiếp cho đội ngũ phát triển."
+    "sub": "Để lại thông tin để nhận lời mời trải nghiệm sớm và góp ý trực tiếp cho đội ngũ phát triển.",
+    "counter_sau": "người đã giữ chỗ dùng thử sớm",
+    "counter_toi_thieu": 10
   },
   "jobs": [
     {

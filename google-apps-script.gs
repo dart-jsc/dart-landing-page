@@ -55,6 +55,18 @@ function doPost(e) {
 }
 
 // Mở URL /exec trực tiếp trên trình duyệt mà thấy dòng chữ này = script đang chạy.
-function doGet() {
+// Gọi /exec?count=1 sẽ trả về số người đã đăng ký (JSON) — dùng cho bộ đếm trên landing page.
+function doGet(e) {
+  if (e && e.parameter && e.parameter.count !== undefined) {
+    var cache = CacheService.getScriptCache();
+    var n = cache.get('waitlist_count'); // cache 60s để không đọc Sheet mỗi lượt xem trang
+    if (n === null) {
+      var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+      n = sh ? Math.max(0, sh.getLastRow() - 1) : 0; // trừ 1 dòng tiêu đề
+      cache.put('waitlist_count', String(n), 60);
+    }
+    return ContentService.createTextOutput(JSON.stringify({ ok: true, count: Number(n) }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
   return ContentService.createTextOutput('GoDart waitlist endpoint đang hoạt động.');
 }
